@@ -29,7 +29,8 @@ Intakes <- Intakes %>% # Call data
   group_by(animal_id) %>% # Call group_by function
   arrange(Intake_Date) %>% # Arrange previous together
   mutate(rank = order(Intake_Date)) # Create rank within group and arrangement
-# Repeat for  other data set
+  
+# Repeat for other data set
 Outcome <- Outcome %>%
   group_by(animal_id) %>%
   arrange(Outcome_Date) %>%
@@ -38,8 +39,8 @@ Outcome <- Outcome %>%
 #### Step 4 - Creating the Unique Value
 With the rank value already in place, we can simply merge the rank value with the animal ID in order to get a unique value through the entire data frame. In other words, with both values being unique to each animal and instance, there should only be one key value in the data frames. This applies to intakes and outcomes. For example, animal 'A3423453' came into the system and left, twice. Therefore, there will be values {A3423453.1, A3423453.2} in both data frames. 
 ```{r}
-# Get 'anima'_id' + '.' + 'rank' value created above to create newly identifiable variable.
-# Exmaple: 'A3423453.2'
+# Get 'animal_id' + '.' + 'rank' value created above to create newly identifiable variable.
+# Example: 'A3423453.2'
 Intakes = transform(Intakes, key=paste(animal_id, rank, sep="."))
 Outcome = transform(Outcome, key=paste(animal_id, rank, sep="."))
 ```
@@ -49,7 +50,7 @@ In order reduce redundancy after the join, I used the newly created primary key 
 # Join both data sets on newly created unique value
 Animal_Data <- merge(x=Intakes,y=Outcome,by="key",all=TRUE)
 # Preview first 5 rows of new join
-head(Animal_Data)
+# head(Animal_Data)
 ```
 The new dataset is now ready to be used and explored. While there are certainly plenty more data prep steps that could be handled by R (such as the address, outcomes, etc.), we will save those for Tableau and perform the steps there in forms of calculations considering this is a Tableau competition and not an R competition. 
 
