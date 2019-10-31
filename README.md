@@ -79,8 +79,6 @@ With the modified rank, we are now able to perform the join and ensure each `Int
 # Now we can try to blend on the new ranks since we addressed the issue
 new_Animal_Data <- merge(x=Intakes,y=Outcome_new,by=c("animal_id", "rank"),all=TRUE)
 
-Please see Tableau for visualization of data.
-```{r}
 # Export Data
 write.csv(Animal_Data, file = "Animal_Data.csv")
 
